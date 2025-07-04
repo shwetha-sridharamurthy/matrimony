@@ -31,6 +31,12 @@
       font-size: 20px;
       margin: 20px 0;
     }
+    input, select {
+      padding: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      width: 80%;
+    }
     button {
       padding: 10px 20px;
       border: none;
@@ -50,19 +56,40 @@
 
   <div class="match-box">
     <h2>💞 Matrimony Shuffle 💞</h2>
-    <div class="pair" id="matchResult">Click below to find your match!</div>
-    <button onclick="shuffleMatch()">🔀 Shuffle Match</button>
+    <input type="text" id="userName" placeholder="Enter your name" />
+    <select id="userGender">
+      <option value="">Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <button onclick="findMatch()">💘 Find My Match</button>
+    <div class="pair" id="matchResult">Enter your name and select gender above.</div>
   </div>
 
   <script>
-    const men = ["Ravi", "Arun", "Siddharth", "Naveen", "Raj"];
-    const women = ["Priya", "Sneha", "Divya", "Anjali", "Neha"];
+    const men = ["Nithin", "Sameer", "Manoj", "Vineet", "Sridhar"];
+    const women = ["Priyanka", "Rashmika", "Janhvi", "Kiara", "Alia"];
 
-    function shuffleMatch() {
-      const man = men[Math.floor(Math.random() * men.length)];
-      const woman = women[Math.floor(Math.random() * women.length)];
+    function findMatch() {
+      const name = document.getElementById("userName").value.trim();
+      const gender = document.getElementById("userGender").value;
+      const result = document.getElementById("matchResult");
 
-      document.getElementById("matchResult").innerHTML = `👨 ${man} is matched with 👩 ${woman}`;
+      if (!name || !gender) {
+        result.innerHTML = "⚠️ Please enter your name and select your gender.";
+        return;
+      }
+
+      let partner;
+      if (gender === "male") {
+        partner = women[Math.floor(Math.random() * women.length)];
+        result.innerHTML = `👨 ${name} is matched with 👩 ${partner}`;
+      } else if (gender === "female") {
+        partner = men[Math.floor(Math.random() * men.length)];
+        result.innerHTML = `👩 ${name} is matched with 👨 ${partner}`;
+      } else {
+        result.innerHTML = "❌ Invalid gender selected.";
+      }
     }
   </script>
 
