@@ -1,2 +1,2 @@
 # matrimony
-To match people
+To match right people(Hopefully)
