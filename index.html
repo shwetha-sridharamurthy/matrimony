@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Matrimony Shuffle</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fdfbfb, #ebedee);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .match-box {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+    }
+    .pair {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #ff4081;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #e91e63;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="match-box">
+    <h2>💞 Matrimony Shuffle 💞</h2>
+    <div class="pair" id="matchResult">Click below to find your match!</div>
+    <button onclick="shuffleMatch()">🔀 Shuffle Match</button>
+  </div>
+
+  <script>
+    const men = ["Ravi", "Arun", "Siddharth", "Naveen", "Raj"];
+    const women = ["Priya", "Sneha", "Divya", "Anjali", "Neha"];
+
+    function shuffleMatch() {
+      const man = men[Math.floor(Math.random() * men.length)];
+      const woman = women[Math.floor(Math.random() * women.length)];
+
+      document.getElementById("matchResult").innerHTML = `👨 ${man} is matched with 👩 ${woman}`;
+    }
+  </script>
+
+</body>
+</html>
