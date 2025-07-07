@@ -3,44 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <title>Matrimony Shuffle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --bg-light: linear-gradient(to right, #fdfbfb, #ebedee);
+      --bg-dark: linear-gradient(to right, #2c3e50, #4ca1af);
+      --text-light: #333;
+      --text-dark: #eee;
+      --card-bg-light: white;
+      --card-bg-dark: #444;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fdfbfb, #ebedee);
+      background: var(--bg-light);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       margin: 0;
+      transition: background 0.3s, color 0.3s;
+      color: var(--text-light);
     }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
     .match-box {
-      background: white;
+      background: var(--card-bg-light);
       padding: 20px 30px;
       border-radius: 12px;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
       text-align: center;
+      transition: background 0.3s;
     }
+
+    body.dark-mode .match-box {
+      background: var(--card-bg-dark);
+    }
+
     h2 {
       margin-top: 0;
       font-size: 24px;
-      color: #333;
     }
+
     .pair {
       font-size: 20px;
       margin: 20px 0;
+      min-height: 24px;
     }
+
     label {
       display: block;
       margin-top: 10px;
       font-weight: 500;
     }
+
     input, select {
       padding: 8px;
       margin: 5px 0 15px 0;
       font-size: 16px;
       width: 80%;
     }
+
     button {
       padding: 10px 20px;
       border: none;
@@ -51,34 +79,62 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
+
     button:hover {
       background-color: #e91e63;
+    }
+
+    #toggleTheme {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #loveQuote {
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 16px;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
 
+  <button id="toggleTheme" aria-label="Toggle Dark Mode">🌙</button>
+
   <div class="match-box">
     <h2>💞 Matrimony Shuffle 💞</h2>
-    
+
     <label for="userName">Enter Your Name</label>
-    <input type="text" id="userName" placeholder="e.g., Priya or Rahul" />
-    
+    <input type="text" id="userName" placeholder="e.g., Priya or Rahul" aria-label="Your Name" />
+
     <label for="userGender">Select Gender</label>
-    <select id="userGender">
+    <select id="userGender" aria-label="Your Gender">
       <option value="" disabled selected>Select Gender</option>
       <option value="male">Male</option>
       <option value="female">Female</option>
     </select>
-    
+
     <button onclick="findMatch()">💘 Find My Match</button>
-    
     <div class="pair" id="matchResult">Enter your name and select gender above.</div>
+    <div id="loveQuote"></div>
   </div>
 
   <script>
     const men = ["Vicky Kaushal", "Kartik Aaryan", "Ayushmann Khurrana", "Rajkummar Rao", "Tiger Shroff", "Ishaan Khatter", "Sidharth Malhotra", "Aditya Roy Kapur", "Varun Dhawan", "Vijay Varma", "Sunny Kaushal", "Vijay Deverakonda", "Shahid Kapoor", "Ranbir Kapoor", "Ranveer Singh", "Arjun Kapoor", "Meezaan Jafri", "Rohit Saraf", "Lakshya Lalwani", "Ahan Shetty"];
     const women = ["Alia Bhatt", "Kiara Advani", "Janhvi Kapoor", "Sara Ali Khan", "Ananya Panday", "Tara Sutaria", "Mrunal Thakur", "Rashmika Mandanna", "Disha Patani", "Kriti Sanon", "Bhumi Pednekar", "Nushrratt Bharuccha", "Triptii Dimri", "Sanya Malhotra", "Radhika Madan", "Pooja Hegde", "Fatima Sana Shaikh", "Taapsee Pannu", "Yami Gautam", "Nora Fatehi"];
+
+    const quotes = [
+      "Love is composed of a single soul inhabiting two bodies. – Aristotle",
+      "You don’t marry someone you can live with – you marry someone you cannot live without.",
+      "In all the world, there is no heart for me like yours. – Maya Angelou",
+      "Every love story is beautiful, but ours is my favorite.",
+      "Where there is love there is life. – Mahatma Gandhi"
+    ];
 
     function findMatch() {
       const name = document.getElementById("userName").value.trim();
@@ -90,7 +146,6 @@
         return;
       }
 
-      // Name validation: only letters and spaces
       if (!/^[a-zA-Z\s]+$/.test(name)) {
         result.innerHTML = "❌ Please enter a valid name (letters and spaces only).";
         return;
@@ -107,6 +162,21 @@
         result.innerHTML = "❌ Invalid gender selected.";
       }
     }
+
+    function setRandomQuote() {
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("loveQuote").textContent = `❤️ ${quote}`;
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById("toggleTheme");
+      body.classList.toggle("dark-mode");
+      btn.textContent = body.classList.contains("dark-mode") ? "☀️" : "🌙";
+    }
+
+    document.getElementById("toggleTheme").addEventListener("click", toggleTheme);
+    window.onload = setRandomQuote;
   </script>
 
 </body>
